@@ -1,0 +1,44 @@
+{
+  "$ref": "#/definitions/webrings",
+  "definitions": {
+    "webrings": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "prev": {
+          "type": "string",
+          "format": "uri"
+        },
+        "next": {
+          "type": "string",
+          "format": "uri"
+        },
+        "color": {
+          "type": "string"
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "description",
+        "url",
+        "prev",
+        "next",
+        "color"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

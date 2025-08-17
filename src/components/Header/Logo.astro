@@ -1,40 +1,79 @@
----
-
----
-
 <a id="logo" href="/" data-fathom="logo" transition:persist="logo">
   <svg
-    viewBox="0 0 125 82"
-    width="125px"
+    viewBox="0 0 240 82"
+    width="240px"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    stroke-linecap="round"
+    stroke-linejoin="round"
   >
+    <!-- N -->
     <path
-      class="letter letter-e"
-      d="M59.73 28.3744C66.3068 20.601 68.1016 12.2296 59.7299 6.99734C46.454 -1.30013 -1.60127 16.7944 5.76275 51.2466C9.94861 70.8298 38.9491 64.9997 46.873 58.5716C58.1551 49.4194 54.497 38.3903 40.1459 45.8649C25.7948 53.3394 26.1146 71.2488 35.9599 76.062C45.8052 80.8753 59.73 65.5977 59.73 65.5977"
+      class="letter letter-n"
+      d="M12 70 L12 12 L44 70 L44 12"
       stroke="currentColor"
       stroke-width="8"
       pathLength="1"></path>
+
+    <!-- I (first) -->
     <path
-      class="letter letter-v"
-      d="M62.4121 49.8778C66.4332 53.9639 76.9548 71.1055 76.9548 71.1055L85.9921 38.1582"
+      class="letter letter-i1"
+      d="M64 12 L64 70"
       stroke="currentColor"
       stroke-width="8"
       pathLength="1"></path>
+
+    <!-- K -->
+    <path
+      class="letter letter-k"
+      d="M84 12 L84 70
+         M84 40 L112 12
+         M84 40 L116 70"
+      stroke="currentColor"
+      stroke-width="8"
+      pathLength="1"></path>
+
+    <!-- I (second) -->
+    <path
+      class="letter letter-i2"
+      d="M136 12 L136 70"
+      stroke="currentColor"
+      stroke-width="8"
+      pathLength="1"></path>
+
+    <!-- T -->
+    <path
+      class="letter letter-t"
+      d="M152 12 L192 12
+         M172 12 L172 70"
+      stroke="currentColor"
+      stroke-width="8"
+      pathLength="1"></path>
+
+    <!-- A -->
     <path
       class="letter letter-a"
-      d="M109.286 65.7015C102.644 75.9042 94.4672 77.8992 92.1642 70.3246C88.9168 59.6437 101.798 40.6548 111.687 45.897C118.958 49.7513 120.972 78.7369 120.972 78.7369"
+      d="M206 70 L220 12 L234 70
+         M212 46 L228 46"
       stroke="currentColor"
       stroke-width="8"
       pathLength="1"></path>
   </svg>
-  <span class="visuallyhidden">Eva Decker</span>
+
+  <span class="visuallyhidden">Nikita</span>
 </a>
 
 <style lang="scss">
   #logo {
-    width: 40px;
+    width: 80px;              /* adjust to taste */
     transform: translateY(-0.1em) rotate(-8deg);
+    display: inline-block;
+  }
+
+  /* Standalone keyframes (your original snippet referenced them implicitly) */
+  @keyframes stroke {
+    from { stroke-dashoffset: 1; }
+    to   { stroke-dashoffset: 0; }
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -47,22 +86,13 @@
         animation-fill-mode: both;
       }
 
-      .letter-e {
-        animation-duration: 0.6s;
-        animation-timing-function: cubic-bezier(1, 0, 0.39, 1);
-      }
-
-      .letter-v {
-        animation-duration: 0.2s;
-        animation-delay: 0.6s;
-        animation-timing-function: cubic-bezier(0.75, 0, 0, 1);
-      }
-
-      .letter-a {
-        animation-duration: 0.4s;
-        animation-delay: 0.85s;
-        animation-timing-function: cubic-bezier(0, -0.01, 0.34, 0.9);
-      }
+      /* Timings tuned to cascade nicely across all letters */
+      .letter-n  { animation-duration: 0.50s; animation-delay: 0s;    animation-timing-function: cubic-bezier(1, 0, 0.39, 1); }
+      .letter-i1 { animation-duration: 0.15s; animation-delay: 0.50s; animation-timing-function: cubic-bezier(0.75, 0, 0, 1); }
+      .letter-k  { animation-duration: 0.45s; animation-delay: 0.65s; animation-timing-function: cubic-bezier(0.85, 0, 0.15, 1); }
+      .letter-i2 { animation-duration: 0.15s; animation-delay: 1.10s; animation-timing-function: cubic-bezier(0.75, 0, 0, 1); }
+      .letter-t  { animation-duration: 0.35s; animation-delay: 1.25s; animation-timing-function: cubic-bezier(0.7, 0, 0.2, 1); }
+      .letter-a  { animation-duration: 0.45s; animation-delay: 1.60s; animation-timing-function: cubic-bezier(0, -0.01, 0.34, 0.9); }
     }
   }
 
@@ -79,22 +109,19 @@
 
 <script>
   function handleAnimation() {
-    // Set animating status to let SVG animations run to completion
-    // Instead of being cut off when the user hovers away
     const logoElem = document.getElementById("logo");
     logoElem?.addEventListener("click", () => {
       if (logoElem.dataset.animating === "true") return;
-
       logoElem.dataset.animating = "true";
 
+      // total = last delay + last duration + small buffer
       setTimeout(() => {
         logoElem.dataset.animating = "false";
-      }, 1300);
+      }, 2100); // ms
     });
   }
 
   handleAnimation();
-
   document.addEventListener("astro:after-swap", () => handleAnimation());
 </script>
 

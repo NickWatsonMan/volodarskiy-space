@@ -1,0 +1,28 @@
+{
+  "$ref": "#/definitions/badges",
+  "definitions": {
+    "badges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "img": {
+            "type": "string"
+          },
+          "alt": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "img",
+          "alt"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

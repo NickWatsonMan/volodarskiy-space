@@ -9,8 +9,8 @@ export async function GET(context) {
   const posts = await getCollection("posts");
 
   return await rss({
-    title: "Eva Town",
-    description: "Dispatches from the world wide web.",
+    title: "Volodarskiy Space",
+    description: "Random thoughts, projects, and experiments by Nikita Volodarskiy.",
     site: context.site,
     trailingSlash: false,
     stylesheet: "/rss/pretty-feed-v3.xsl",

@@ -1,0 +1,79 @@
+{
+  "$ref": "#/definitions/work",
+  "definitions": {
+    "work": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "timeline": {
+          "type": "object",
+          "properties": {
+            "start": {
+              "type": "string"
+            },
+            "end": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "start",
+            "end"
+          ],
+          "additionalProperties": false
+        },
+        "img": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "src": {
+                "type": "string"
+              },
+              "alt": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "src",
+              "alt"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "video": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "src": {
+                "type": "string"
+              },
+              "poster": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "src",
+              "poster"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "ogImage": {
+          "type": "string"
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "timeline"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
