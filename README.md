@@ -1,18 +1,13 @@
 # Nikita Volodarskiy
 
-This repository hosts the code for [volodarskiy.space](https://volodarskiy.space), my personal corner of the internet. Here I publish life updates, long-form posts, and experiments with new technologies.
+This repository hosts the code for [volodarskiy.space]([https://volodarskiy.space](https://nickwatsonman.github.io/volodarskiy-space), my personal corner of the internet. Here I publish life updates, long-form posts, and experiments with new technologies.
 
-## Recent Life Updates
-
-- **2024-07:** Rebuilt the site using Astro 5.
-- **2024-05:** Started a series of posts about building small web apps.
-- **2024-03:** Moved to a new city and looking for interesting collaborators.
 
 ## Blog
 
 Articles live under [`src/content/blog`](src/content/blog) and are written in Markdown/MDX. Each post contains a `datePublished` field and an optional `dateModified` to track updates.
 
-You can subscribe to new posts via the site's [RSS feed](https://volodarskiy.space/rss.xml).
+You can subscribe to new posts via the site's [RSS feed](https://nickwatsonman.github.io/volodarskiy-space/rss.xml).
 
 ## Getting Started
 
