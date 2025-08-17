@@ -46,7 +46,7 @@ const remarks: Record<RemarkType, Remark> = {
       "hey you",
       "hey nerd",
       "you found me!",
-      "welcome 2 my garden ✿",
+      "welcome to my blog ✿",
       "salutations",
       "hi~ (❛‿❛✿̶̥̥)",
       "oh hey",

@@ -16,7 +16,7 @@ All code is open source and available on [GitHub](https://github.com/evadecker/e
 
 ## Technology
 
-This site is built using [Astro](https://astro.build). Astro handles the content-heavy views (written in [MDX](https://mdxjs.com)), but for more interactive components I use [React](https://react.dev) and [TypeScript](https://www.typescriptlang.org). [Guestbook](/guestbook) entries are stored on [Turso](https://turso.tech/).
+This site is built using [Astro](https://astro.build). Astro handles the content-heavy views (written in [MDX](https://mdxjs.com)), but for more interactive components I use [React](https://react.dev) and [TypeScript](https://www.typescriptlang.org).
 
 Code is edited using [Cursor](https://www.cursor.com/) on a [MacBook Pro](https://www.apple.com/macbook-pro/). My terminal of choice is [Warp](https://www.warp.dev).
 
@@ -60,7 +60,7 @@ This site aims to conform to the Level AA accessibility standards outlined in th
 
 ## Privacy
 
-I collect basic, fully-anonymized page view analytics using [Fathom](https://usefathom.com/ref/VMZJZD). I don't want your data! If you don't believe me, take a look at the [public analytics for eva.town](https://app.usefathom.com/share/wkftecuz/eva.town). On the flip side, if you'd like to share who you are and where you're visiting from—just for kicks—you can sign the [guestbook](/guestbook).
+I collect basic, fully-anonymized page view analytics using [Fathom](https://usefathom.com/ref/VMZJZD). I don't want your data! If you don't believe me, take a look at the [public analytics for eva.town](https://app.usefathom.com/share/wkftecuz/eva.town).
 
 ## Notice an issue?
 
