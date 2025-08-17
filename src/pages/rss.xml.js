@@ -13,12 +13,12 @@ export async function GET(context) {
     description: "Random thoughts, projects, and experiments by Nikita Volodarskiy.",
     site: context.site,
     trailingSlash: false,
-    stylesheet: "/rss/pretty-feed-v3.xsl",
+    stylesheet: `${import.meta.env.BASE_URL}/rss/pretty-feed-v3.xsl`,
     items: posts.map((post) => ({
       title: post.data.title,
       pubDate: post.data.datePublished,
       description: post.data.description,
-      link: `/posts/${post.id}/`,
+      link: `${import.meta.env.BASE_URL}/posts/${post.id}/`,
       content: sanitizeHtml(parser.render(post.body), {
         allowedTags: sanitizeHtml.defaults.allowedTags.concat([
           "img",
