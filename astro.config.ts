@@ -11,7 +11,8 @@ import imgAttr from "remark-imgattr";
 import { autolinkConfig } from "./plugins/rehype-autolink-config";
 
 export default defineConfig({
-  site: "https://vk.com",
+  site: 'https://nickwatsonman.github.io',
+  base: 'volodarskiy-space',
   prefetch: true,
   integrations: [
     react(),
