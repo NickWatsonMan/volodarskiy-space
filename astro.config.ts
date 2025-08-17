@@ -12,7 +12,7 @@ import { autolinkConfig } from "./plugins/rehype-autolink-config";
 
 export default defineConfig({
   site: 'https://nickwatsonman.github.io',
-  base: 'volodarskiy-space',
+  base: '/volodarskiy-space',
   prefetch: true,
   integrations: [
     react(),

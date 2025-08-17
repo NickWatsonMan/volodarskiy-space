@@ -17,7 +17,7 @@ export interface Props {
 const { title, description, ogImage, ogAlt } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const pageTitle = Astro.url.pathname === "/" ? title : `${title} · Eva Decker`;
+const pageTitle = Astro.url.pathname === "/" ? title : `${title} · Volodarskiy`;
 ---
 
 <!doctype html>
