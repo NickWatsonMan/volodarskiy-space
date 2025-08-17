@@ -50,3 +50,7 @@ Issues and pull requests are welcome. This project is primarily personal, but su
 
 Licensed under the [MIT License](LICENSE).
 
+## Acknowledgments
+
+This project traces its roots back to the [Eva.town](https://eva.town) initiative, and I'm grateful for the inspiration it provided.
+
