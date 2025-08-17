@@ -1,6 +1,6 @@
 # Nikita Volodarskiy
 
-This repository hosts the code for [volodarskiy.space]([https://volodarskiy.space](https://nickwatsonman.github.io/volodarskiy-space), my personal corner of the internet. Here I publish life updates, long-form posts, and experiments with new technologies.
+This repository hosts the code for [volodarskiy.space](https://nickwatsonman.github.io/volodarskiy-space), my personal corner of the internet. Here I publish life updates, long-form posts, and experiments with new technologies.
 
 
 ## Blog
