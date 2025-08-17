@@ -68,6 +68,52 @@ export const collections = {
       }),
   }),
 
+  experiments: defineCollection({
+    loader: glob({
+      pattern: "**/[^_]*.yml",
+      base: "./src/content/experiments",
+    }),
+    schema: () =>
+      z.object({
+        title: z.string(),
+        datePublished: z.date(),
+        description: z.string().optional(),
+        url: z.string(),
+        features: z
+          .object({
+            name: z.string(),
+            url: z.string().url(),
+          })
+          .array()
+          .optional(),
+      }),
+  }),
+
+  webrings: defineCollection({
+    loader: glob({ pattern: "**/[^_]*.yml", base: "./src/content/webrings" }),
+    schema: () =>
+      z.object({
+        title: z.string(),
+        description: z.string(),
+        url: z.string().url(),
+        prev: z.string().url(),
+        next: z.string().url(),
+        color: z.string(), // Radix color
+      }),
+  }),
+
+  badges: defineCollection({
+    loader: glob({ pattern: "**/[^_]*.yml", base: "./src/content/badges" }),
+    schema: ({ image }) =>
+      z
+        .object({
+          img: image(),
+          alt: z.string(),
+          url: z.string().optional(),
+        })
+        .array(),
+  }),
+
   now: defineCollection({
     loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/content/now" }),
     schema: () =>

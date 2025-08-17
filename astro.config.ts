@@ -1,3 +1,4 @@
+import db from "@astrojs/db";
 import { rehypeHeadingIds } from "@astrojs/markdown-remark";
 import mdx from "@astrojs/mdx";
 import netlify from "@astrojs/netlify";
@@ -22,6 +23,7 @@ export default defineConfig({
     }),
     mdx(),
     sitemap(),
+    db(),
   ],
   trailingSlash: "never",
   adapter: netlify(),
@@ -39,5 +41,6 @@ export default defineConfig({
     "/projects/genderswap": "/posts/genderswap",
     "/projects/boundaries-map": "/posts/boundaries-map",
     "/projects/commonplace": "/posts/commonplace",
+    "/friends": "/webrings",
   },
 });

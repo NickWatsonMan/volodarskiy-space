@@ -15,15 +15,22 @@ posts.sort((a, b) => {
     : 1;
 });
 
-const title = "Blog";
-const description = "Thoughts and writing.";
+const experiments = await getCollection("experiments");
+experiments.sort((a, b) => {
+  return dayjs(b.data.datePublished).isBefore(dayjs(a.data.datePublished))
+    ? -1
+    : 1;
+});
+
+const title = "The Garden";
+const description = "Every garden starts somewhere. This is mine.";
 ---
 
 <BaseLayout title={title} description={description} includeFooter padBottom>
   <PageHeader title={title} description={description} />
   <Center>
     <section>
-      <h2>Posts</h2>
+      <h2>Writing</h2>
       {
         posts.map((post) => (
           <PostLink
@@ -36,6 +43,20 @@ const description = "Thoughts and writing.";
         ))
       }
     </section>
+    <section>
+      <h2>Experiments</h2>
+      {
+        experiments.map((experiment) => (
+          <PostLink
+            url={experiment.data.url}
+            title={experiment.data.title}
+            description={experiment.data.description}
+            datePublished={experiment.data.datePublished}
+            features={experiment.data.features}
+          />
+        ))
+      }
+    </section>
   </Center>
 </BaseLayout>
 
@@ -44,5 +65,9 @@ const description = "Thoughts and writing.";
     display: flex;
     flex-direction: column;
     gap: var(--space-l);
+
+    & + section {
+      margin-block-start: var(--space-3xl);
+    }
   }
 </style>
