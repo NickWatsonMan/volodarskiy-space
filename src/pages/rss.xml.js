@@ -8,17 +8,20 @@ const parser = new MarkdownIt();
 export async function GET(context) {
   const posts = await getCollection("posts");
 
-  return await rss({
+  // Construct an absolute same-origin URL for the XSL
+  const stylesheetUrl = new URL("/rss/pretty-feed-v3.xsl", context.site).href;
+
+  return rss({
     title: "Volodarskiy Space",
     description: "Random thoughts, projects, and experiments by Nikita Volodarskiy.",
     site: context.site,
     trailingSlash: false,
-    stylesheet: `${import.meta.env.BASE_URL}/rss/pretty-feed-v3.xsl`,
+    stylesheet: stylesheetUrl, // <-- absolute, same-origin
     items: posts.map((post) => ({
       title: post.data.title,
       pubDate: post.data.datePublished,
       description: post.data.description,
-      link: `${import.meta.env.BASE_URL}/posts/${post.id}/`,
+      link: `/posts/${post.id}/`,
       content: sanitizeHtml(parser.render(post.body), {
         allowedTags: sanitizeHtml.defaults.allowedTags.concat([
           "img",
