@@ -39,7 +39,7 @@ const { title, description, ogImage, datePublished, dateModified } = data;
   <div class="pagination" slot="after-prose">
     {
       prev && (
-        <a href={`${import.meta.env.BASE_URL}/posts/${prev.id}`} class="prev">
+        <a href={`posts/${prev.id}`} class="prev">
           <span class="label">Previous</span>
           <span class="title">{prev.data.title}</span>
         </a>
@@ -47,7 +47,7 @@ const { title, description, ogImage, datePublished, dateModified } = data;
     }
     {
       next && (
-        <a href={`${import.meta.env.BASE_URL}/posts/${next.id}`} class="next">
+        <a href={`posts/${next.id}`} class="next">
           <span class="label">Next</span>
           <span class="title">{next.data.title}</span>
         </a>

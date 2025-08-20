@@ -11,7 +11,7 @@ import imgAttr from "remark-imgattr";
 import { autolinkConfig } from "./plugins/rehype-autolink-config";
 
 export default defineConfig({
-  site: 'https://www.volodarskiy.space',
+  site: 'https://volodarskiy.space',
   prefetch: true,
   integrations: [
     react(),
