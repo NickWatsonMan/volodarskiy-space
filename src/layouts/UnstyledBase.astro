@@ -41,7 +41,7 @@ const pageTitle = Astro.url.pathname === "/" ? title : `${title} · Volodarskiy`
             {
               style: "normal",
               // ⬇️ use a URL, not a filesystem path
-              path: `${import.meta.env.BASE_URL}/fonts/HEX_Franklin_v0.3_Variable.woff2`,
+              path: `/fonts/HEX_Franklin_v0.3_Variable.woff2`,
             },
           ],
           display: "swap",
@@ -54,7 +54,7 @@ const pageTitle = Astro.url.pathname === "/" ? title : `${title} · Volodarskiy`
           src: [
             {
               style: "normal",
-              path: `${import.meta.env.BASE_URL}/fonts/MonoLisaVariableNormal.woff2`,
+              path: `/fonts/MonoLisaVariableNormal.woff2`,
             },
           ],
           display: "swap",
@@ -64,16 +64,16 @@ const pageTitle = Astro.url.pathname === "/" ? title : `${title} · Volodarskiy`
         },
       ]}
     />
-    <link rel="icon" href={`${import.meta.env.BASE_URL}/favicon.svg?v=4`} type="image/svg+xml" />
+    <link rel="icon" href={`public/favicon.svg?v=4`} type="image/svg+xml" />
     <link
       rel="icon"
-      href={`${import.meta.env.BASE_URL}/favicon-light.png`}
+      href={`public/favicon-light.png`} 
       type="image/png"
       media="(prefers-color-scheme: light)"
     />
     <link
       rel="icon"
-      href={`${import.meta.env.BASE_URL}/favicon-dark.png`}
+      href={`public/favicon-dark.png`}
       type="image/png"
       media="(prefers-color-scheme: dark)"
     />
@@ -101,8 +101,8 @@ const pageTitle = Astro.url.pathname === "/" ? title : `${title} · Volodarskiy`
       content={ogAlt ?? "Eva designs and builds things for the web."}
     />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="manifest" href={`${import.meta.env.BASE_URL}/manifest.json`} />
-    <link rel="sitemap" href={`${import.meta.env.BASE_URL}/sitemap-index.xml`} />
+    <link rel="manifest" href={`/manifest.json`} />
+    <link rel="sitemap" href={`/sitemap-index.xml`} />
     <title>{pageTitle}</title>
     <ClientRouter />
     <LoadingIndicator color="var(--blue-9)" height="3px" threshold={600} />
