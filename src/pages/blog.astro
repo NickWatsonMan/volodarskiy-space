@@ -33,7 +33,7 @@ const description = "Longer posts can be found here.";
       {
         posts.map((post) => (
           <PostLink
-            url={`posts/${post.id}`}
+            url={`/posts/${post.id}`}
             title={smartquotes(post.data.title)}
             description={smartquotes(post.data.description)}
             datePublished={post.data.datePublished}
