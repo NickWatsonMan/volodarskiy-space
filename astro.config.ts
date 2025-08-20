@@ -12,7 +12,6 @@ import { autolinkConfig } from "./plugins/rehype-autolink-config";
 
 export default defineConfig({
   site: 'https://www.volodarskiy.space',
-  base: '/',
   prefetch: true,
   integrations: [
     react(),
