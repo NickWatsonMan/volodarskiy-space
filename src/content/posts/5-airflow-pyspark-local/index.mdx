@@ -1,0 +1,390 @@
+# Airflow + PySpark Study Project
+
+Link to the repo: [Airflow-and-PySpark-Study-Project](https://github.com/NickWatsonMan/Airflow-and-PySpark-Study-Project/tree/main)
+
+This is my study project for setting up Ariflow and Spark on my local machine.
+
+I wanted to keep everything inside this project folder as much as possible, so I did not want to install Spark globally on my machine. The idea was:
+
+- keep Airflow in this repo
+- keep Java in this repo
+- keep Spark in this repo
+- keep DAGs and PySpark jobs in this repo
+
+That way I can experiment without cluttering my local machine too much.
+
+## What I Built
+
+I created:
+
+- `dags/simple_dag.py`
+  A simple Airflow DAG
+- `jobs/simple_pyspark_job.py`
+  A tiny PySpark job
+
+The DAG does 3 things:
+
+1. prints the Airflow run date
+2. runs a small sleep task
+3. submits a PySpark job with `SparkSubmitOperator`
+
+The PySpark job is very simple. It receives the Airflow date as an argument, starts a local Spark session, and prints a small result from `spark.range(5)`.
+
+## Project Structure
+
+```text
+.
+├── airflow.cfg
+├── dags/
+│   └── simple_dag.py
+├── jobs/
+│   └── simple_pyspark_job.py
+├── tools/
+│   ├── java/
+│   └── spark/
+└── .venv/
+```
+
+## Airflow Setup
+
+Airflow is configured to load DAGs from the local `dags/` folder.
+
+Important things I noticed in `airflow.cfg`:
+
+- Airflow uses `dags/` as the DAG folder
+- executor is `LocalExecutor`
+- example DAGs were enabled at first
+
+If I want to disable the example DAGs, I need this in `airflow.cfg`:
+
+```ini
+load_examples = False
+```
+
+and then restart Airflow.
+
+## Java Setup
+
+Spark needs Java, so this was the first thing I had to solve.
+
+I wanted Java inside the project folder, not as a global install.
+
+What worked:
+
+- download a JDK 17 archive for macOS
+- unpack it into `tools/java/`
+
+What did not work:
+
+- `.pkg` installer
+  It installs globally and does not let me choose this project folder
+- Linux JDK archive on macOS
+  I got `exec format error`
+
+My local Java path looks like this:
+
+```text
+tools/java/jdk-17.0.18+8/Contents/Home
+```
+
+To use it in the terminal:
+
+```bash
+export JAVA_HOME="$(pwd)/tools/java/jdk-17.0.18+8/Contents/Home"
+export PATH="$JAVA_HOME/bin:$PATH"
+java -version
+```
+
+If `java -version` prints a Java 17 version, then Java is working.
+
+## Spark Setup
+
+I also wanted Spark inside the project folder.
+
+So I downloaded Spark as an archive and unpacked it into:
+
+```text
+tools/spark/spark-4.1.1-bin-hadoop3
+```
+
+To use it in the terminal:
+
+```bash
+export JAVA_HOME="$(pwd)/tools/java/jdk-17.0.18+8/Contents/Home"
+export SPARK_HOME="$(pwd)/tools/spark/spark-4.1.1-bin-hadoop3"
+export PATH="$JAVA_HOME/bin:$SPARK_HOME/bin:$PATH"
+spark-submit --version
+```
+
+If `spark-submit --version` prints the Spark version, then Spark is working.
+
+## PySpark Setup
+
+After Java and Spark were working, I needed PySpark inside the Python environment used by this project.
+
+One issue I had was that the virtual environment did not have `pip`.
+
+So I fixed that with:
+
+```bash
+python3.12 -m ensurepip --upgrade
+python3.12 -m pip --version
+```
+
+Then I installed PySpark:
+
+```bash
+python3.12 -m pip install pyspark
+```
+
+Important lesson:
+
+- `pip3.12` was pointing to a global Python on my machine
+- `python3.12` was pointing to the project virtualenv
+- because of that, I first installed packages into the wrong place
+
+So the safer command was:
+
+```bash
+python3.12 -m pip install pyspark
+```
+
+## Testing PySpark Before Airflow
+
+Before trying to run Spark from Airflow, I tested PySpark directly from the terminal.
+
+This helped me check that Java, Spark, and PySpark were all wired correctly.
+
+Test command:
+
+```bash
+export JAVA_HOME="$(pwd)/tools/java/jdk-17.0.18+8/Contents/Home"
+export SPARK_HOME="$(pwd)/tools/spark/spark-4.1.1-bin-hadoop3"
+export PATH="$JAVA_HOME/bin:$SPARK_HOME/bin:$PATH"
+
+python3.12 -c "from pyspark.sql import SparkSession; spark = SparkSession.builder.master('local[*]').appName('test').getOrCreate(); print(spark.range(5).collect()); spark.stop()"
+```
+
+Expected output:
+
+```text
+[Row(id=0), Row(id=1), Row(id=2), Row(id=3), Row(id=4)]
+```
+
+I also saw a warning about native Hadoop libraries on macOS. That turned out to be normal for this local setup.
+
+## My Airflow DAG
+
+The DAG is in `dags/simple_dag.py`.
+
+It has three tasks:
+
+- `print_date`
+- `sleep`
+- `run_pyspark_job`
+
+The first task prints Airflow context values like:
+
+- `logical_date`
+- `ds`
+- `data_interval_start`
+- `data_interval_end`
+
+This was useful for learning that Airflow has its own run date context, which is different from just calling the shell command `date`.
+
+The Spark task submits the PySpark job and passes Airflow's `ds` value to it:
+
+```python
+application_args=["{{ ds }}"]
+```
+
+That means if I backfill the DAG, the job gets the Airflow run date, not the current machine time.
+
+## My PySpark Job
+
+The job is in `jobs/simple_pyspark_job.py`.
+
+It:
+
+- reads the first command-line argument
+- starts a local Spark session
+- runs a very small Spark job
+- prints the run date and rows
+
+The expected output is something like:
+
+```text
+run_ds=2026-03-27
+rows=[Row(id=0), Row(id=1), Row(id=2), Row(id=3), Row(id=4)]
+```
+
+## Switching From BashOperator To SparkSubmitOperator
+
+At first, running Spark from `BashOperator` was the easiest way to test things.
+
+Later I switched to `SparkSubmitOperator`, because it is a cleaner and more Airflow-native way to submit Spark jobs.
+
+But this introduced a few issues.
+
+## Problem 1: Spark Provider Was Missing
+
+`SparkSubmitOperator` does not work unless the Airflow Spark provider is installed.
+
+So I had to install:
+
+```bash
+python3.12 -m pip install apache-airflow-providers-apache-spark
+```
+
+## Problem 2: Provider Compatibility Error
+
+After that, Airflow still failed with an import error around:
+
+```text
+cannot import name 'AirflowException'
+```
+
+The reason was a compatibility mismatch between the Spark provider and the Airflow compatibility provider package.
+
+I fixed it by making sure `apache-airflow-providers-common-compat` was updated too.
+
+After changing packages, Airflow needed a restart.
+
+Important lesson:
+
+- changing Python packages is not enough
+- scheduler and webserver must be restarted too
+
+## Problem 3: Spark Was Trying To Run With YARN
+
+Another confusing problem was that the Spark task tried to run with:
+
+```text
+--master yarn
+```
+
+That was wrong for my local setup.
+
+The reason was:
+
+- `SparkSubmitOperator` looks up the Airflow connection `spark_default`
+- if it cannot resolve it properly, it falls back to `yarn`
+
+At first I used this:
+
+```text
+spark://local[*]?deploy-mode=client
+```
+
+and that looked correct to me, but it was not valid for Airflow because the brackets in `local[*]` must be URL-encoded.
+
+The correct value is:
+
+```text
+spark://local%5B*%5D?deploy-mode=client
+```
+
+To expose the connection before starting Airflow:
+
+```bash
+export AIRFLOW_CONN_SPARK_DEFAULT='spark://local%5B*%5D?deploy-mode=client'
+```
+
+Then restart Airflow.
+
+## Running The Project
+
+From the project root, I use something like this:
+
+```bash
+export JAVA_HOME="$(pwd)/tools/java/jdk-17.0.18+8/Contents/Home"
+export SPARK_HOME="$(pwd)/tools/spark/spark-4.1.1-bin-hadoop3"
+export PATH="$JAVA_HOME/bin:$SPARK_HOME/bin:$PATH"
+export AIRFLOW_CONN_SPARK_DEFAULT='spark://local%5B*%5D?deploy-mode=client'
+```
+
+Then I start or restart Airflow from the same environment.
+
+## What I Look For In Airflow Logs
+
+For the normal Bash task:
+
+- I open the task logs in the Airflow UI
+- the output of the command appears there
+
+For the Spark task:
+
+- I check that the rendered command does not contain `--master yarn`
+- I check that the job prints:
+
+```text
+run_ds=...
+rows=[Row(id=0), Row(id=1), Row(id=2), Row(id=3), Row(id=4)]
+```
+
+## Problems I Hit And How I Solved Them
+
+### Wrong Java archive
+
+Problem:
+
+- I downloaded a Linux JDK archive on macOS
+
+Result:
+
+- `exec format error`
+
+Fix:
+
+- download the macOS archive build instead
+
+### `.pkg` installer was not suitable
+
+Problem:
+
+- `.pkg` installs globally
+
+Fix:
+
+- use `.tar.gz` archive instead
+
+### `pyspark` installed into the wrong Python
+
+Problem:
+
+- `pip3.12` was global
+- `python3.12` was in the project virtualenv
+
+Fix:
+
+- use `python3.12 -m pip install ...`
+
+### Airflow import errors after provider install
+
+Problem:
+
+- provider version mismatch
+
+Fix:
+
+- install/update the needed provider packages
+- restart Airflow
+
+### Spark fell back to YARN
+
+Problem:
+
+- Airflow did not parse `spark_default` correctly
+
+Fix:
+
+- use:
+
+```bash
+export AIRFLOW_CONN_SPARK_DEFAULT='spark://local%5B*%5D?deploy-mode=client'
+```
+
+
+## Conclusion
+
+That's it! The goal of the project was reached. Everything works fine and everything is installed within the project folder.
