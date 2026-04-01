@@ -155,16 +155,12 @@
 }
 
 .prose .expressive-code {
-  border-radius: var(--radius-m);
-  margin-block: var(--space-xl);
-  overflow: hidden;
-  border: 1px solid var(--gray-a6);
-  background: var(--gray-2);
+  border-radius: var(--radius-xs);
+  margin-block: var(--space-l);
 }
 
 .prose .expressive-code .frame {
   box-shadow: none;
-  border: none;
 }
 
 .prose :not(pre) code {
