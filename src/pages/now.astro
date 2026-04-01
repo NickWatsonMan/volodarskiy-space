@@ -9,8 +9,8 @@ events.sort((a, b) => {
   return dayjs(b.data.date).isBefore(dayjs(a.data.date)) ? -1 : 1;
 });
 
-const title = "Heute";
-const description = "Genau wie Twitter!";
+const title = "Now";
+const description = "The sacred timeline!";
 ---
 
 <ProseLayout title={title} description={description}>
@@ -36,11 +36,10 @@ const description = "Genau wie Twitter!";
     }
     <li class="event">
       <div class="dot" aria-hidden></div>
-      <span class="heading">Vor einiger Zeit</span>
+      <span class="heading">A long time ago in a galaxy far, far away...</span>
       <div class="content">
         <p>
-          Ich habe <a href="https://nownownow.com/">https://nownownow.com/
-</a> entdeckt. Dort geht es darum, eine <code>/now</code>-Seite zu erstellen, um kurze Updates darüber zu teilen, wie es mir gerade jetzt geht – so, als würde man sich nach längerer Zeit zum ersten Mal wieder mit einem Freund treffen und ein bisschen aufholen. Die großen Dinge im Leben. Klingt schön. Vielleicht mache ich so eine Seite.
+          I've created this blog using [Astro](https://astro.build/) to host it and own my content.
         </p>
       </div>
     </li>
