@@ -163,29 +163,6 @@
   box-shadow: none;
 }
 
-:global(.dark) .prose .expressive-code .frame {
-  --code-background: var(--gray-2);
-  background: var(--gray-2);
-  border: 1px solid var(--gray-a6);
-  border-radius: var(--radius-m);
-  overflow: hidden;
-}
-
-:global(.dark) .prose .expressive-code .header {
-  background: var(--gray-3);
-  border-bottom: 1px solid var(--gray-a6);
-}
-
-:global(.dark) .prose .expressive-code .frame pre,
-:global(.dark) .prose .expressive-code .frame code {
-  background: transparent !important;
-}
-
-:global(.dark) .prose .expressive-code .title,
-:global(.dark) .prose .expressive-code .copy button {
-  color: var(--gray-12);
-}
-
 .prose :not(pre) code {
   background-color: var(--gray-3);
   border-radius: var(--radius-xs);
