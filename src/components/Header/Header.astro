@@ -1,7 +1,6 @@
 ---
 import Center from "../Center.astro";
 import { Icon } from "../Icon/Icon";
-import Logo from "./Logo.astro";
 
 const currentPath = Astro.url.pathname;
 const topLevelPath = currentPath.split("/")[1];
@@ -25,7 +24,6 @@ const navigation = [
 <header>
   <Center>
     <nav id="nav">
-      <Logo />
       <div class="links">
         {
           navigation.map((item) => (
@@ -125,7 +123,7 @@ const navigation = [
   nav {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     gap: var(--space-s);
   }
 
@@ -133,7 +131,6 @@ const navigation = [
     display: flex;
     align-items: stretch;
     gap: var(--space-2xs);
-    margin-inline-end: calc(-1 * var(--space-s));
 
     a,
     button {
