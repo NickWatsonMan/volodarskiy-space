@@ -97,7 +97,13 @@
 }
 
 .prose p + p {
-  margin-top: var(--space-m);
+  margin-top: var(--space-l);
+}
+
+.prose p,
+.prose li,
+.prose blockquote {
+  line-height: 1.65;
 }
 
 .prose * + ul,
