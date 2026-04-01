@@ -102,4 +102,19 @@
 
 .dark {
   --font-weight-normal: 360;
+  --gray-1: #1f1f28;
+  --gray-2: #24242d;
+  --gray-3: #2a2a34;
+  --gray-4: #31313c;
+  --gray-5: #3a3a45;
+  --gray-6: #454550;
+  --gray-7: #565662;
+  --gray-8: #6b6b78;
+  --gray-9: #82828f;
+  --gray-10: #9c9ca8;
+  --gray-11: #b9b9c4;
+  --gray-12: #dcd7ba;
+
+  --gray-a4: rgb(220 215 186 / 0.14);
+  --gray-a6: rgb(220 215 186 / 0.24);
 }

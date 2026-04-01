@@ -47,7 +47,7 @@ const navigation = [
 
 <script>
   import * as Fathom from "fathom-client";
-  import { gray, grayDark } from "@radix-ui/colors";
+  import { gray } from "@radix-ui/colors";
   import {
     TRANSITION_BEFORE_SWAP,
     isTransitionBeforeSwapEvent,
@@ -72,7 +72,7 @@ const navigation = [
     if (metaTheme !== null)
       metaTheme.setAttribute(
         "content",
-        theme === "dark" ? grayDark.gray1 : gray.gray1
+        theme === "dark" ? "#1f1f28" : gray.gray1
       );
   }
 
