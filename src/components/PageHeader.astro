@@ -46,10 +46,10 @@ const isModifiedSameDay = dayjs(datePublished).isSame(dateModified, "day");
       datePublished && (
         <div class="date">
           <div class="icon">
-            <Icon icon="seedling" size="20" />
+            <Icon icon="coffee" size="20" />
           </div>
           <span>
-            Planted <RelativeDate date={datePublished} client:load />
+            Brewed On <RelativeDate date={datePublished} client:load />
             {dateModified && !isModifiedSameDay && (
               <span class="tended">
                 + tended <RelativeDate date={dateModified} client:load />
