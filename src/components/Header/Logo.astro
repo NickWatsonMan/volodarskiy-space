@@ -1,62 +1,23 @@
-<a id="logo" href={`/`} data-fathom="logo" transition:persist="logo">
+<a id="logo" href={`/`} data-fathom="logo" transition:persist="logo" aria-label="Home">
   <svg
-    viewBox="0 0 240 82"
-    width="240px"
+    viewBox="0 0 48 64"
+    width="48"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     stroke-linecap="round"
     stroke-linejoin="round"
   >
-    <!-- N -->
     <path
-      class="letter letter-n"
-      d="M12 70 L12 12 L44 70 L44 12"
+      class="mark mark-left"
+      d="M14 12 L14 52"
       stroke="currentColor"
-      stroke-width="8"
+      stroke-width="4"
       pathLength="1"></path>
-
-    <!-- I (first) -->
     <path
-      class="letter letter-i1"
-      d="M64 12 L64 70"
+      class="mark mark-right"
+      d="M34 12 L34 52"
       stroke="currentColor"
-      stroke-width="8"
-      pathLength="1"></path>
-
-    <!-- K -->
-    <path
-      class="letter letter-k"
-      d="M84 12 L84 70
-         M84 40 L112 12
-         M84 40 L116 70"
-      stroke="currentColor"
-      stroke-width="8"
-      pathLength="1"></path>
-
-    <!-- I (second) -->
-    <path
-      class="letter letter-i2"
-      d="M136 12 L136 70"
-      stroke="currentColor"
-      stroke-width="8"
-      pathLength="1"></path>
-
-    <!-- T -->
-    <path
-      class="letter letter-t"
-      d="M152 12 L192 12
-         M172 12 L172 70"
-      stroke="currentColor"
-      stroke-width="8"
-      pathLength="1"></path>
-
-    <!-- A -->
-    <path
-      class="letter letter-a"
-      d="M206 70 L220 12 L234 70
-         M212 46 L228 46"
-      stroke="currentColor"
-      stroke-width="8"
+      stroke-width="4"
       pathLength="1"></path>
   </svg>
 
@@ -65,20 +26,22 @@
 
 <style lang="scss">
   #logo {
-    width: 80px;              /* adjust to taste */
-    transform: translateY(-0.1em) rotate(-8deg);
-    display: inline-block;
+    width: 32px;
+    height: 32px;
+    transform: translateY(-0.05em) rotate(-8deg);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  /* Standalone keyframes (your original snippet referenced them implicitly) */
   @keyframes stroke {
     from { stroke-dashoffset: 1; }
-    to   { stroke-dashoffset: 0; }
+    to { stroke-dashoffset: 0; }
   }
 
   @media (prefers-reduced-motion: no-preference) {
     [data-animating="true"] {
-      .letter {
+      .mark {
         stroke-dasharray: 1;
         stroke-dashoffset: 1;
         animation-name: stroke;
@@ -86,13 +49,17 @@
         animation-fill-mode: both;
       }
 
-      /* Timings tuned to cascade nicely across all letters */
-      .letter-n  { animation-duration: 0.50s; animation-delay: 0s;    animation-timing-function: cubic-bezier(1, 0, 0.39, 1); }
-      .letter-i1 { animation-duration: 0.15s; animation-delay: 0.50s; animation-timing-function: cubic-bezier(0.75, 0, 0, 1); }
-      .letter-k  { animation-duration: 0.45s; animation-delay: 0.65s; animation-timing-function: cubic-bezier(0.85, 0, 0.15, 1); }
-      .letter-i2 { animation-duration: 0.15s; animation-delay: 1.10s; animation-timing-function: cubic-bezier(0.75, 0, 0, 1); }
-      .letter-t  { animation-duration: 0.35s; animation-delay: 1.25s; animation-timing-function: cubic-bezier(0.7, 0, 0.2, 1); }
-      .letter-a  { animation-duration: 0.45s; animation-delay: 1.60s; animation-timing-function: cubic-bezier(0, -0.01, 0.34, 0.9); }
+      .mark-left {
+        animation-duration: 0.2s;
+        animation-delay: 0s;
+        animation-timing-function: cubic-bezier(0.75, 0, 0.2, 1);
+      }
+
+      .mark-right {
+        animation-duration: 0.2s;
+        animation-delay: 0.16s;
+        animation-timing-function: cubic-bezier(0.8, 0, 0.2, 1);
+      }
     }
   }
 
@@ -114,10 +81,9 @@
       if (logoElem.dataset.animating === "true") return;
       logoElem.dataset.animating = "true";
 
-      // total = last delay + last duration + small buffer
       setTimeout(() => {
         logoElem.dataset.animating = "false";
-      }, 2100); // ms
+      }, 700);
     });
   }
 
