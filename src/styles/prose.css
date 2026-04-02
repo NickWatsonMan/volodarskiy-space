@@ -181,20 +181,57 @@
 }
 
 .prose blockquote {
-  border-left: 2px solid var(--gray-7);
-  padding-left: var(--space-l);
+  position: relative;
+  border-left: 3px solid var(--jade-8);
+  border-radius: 0 var(--radius-m) var(--radius-m) 0;
+  background:
+    linear-gradient(135deg, var(--jade-a3), transparent 70%),
+    var(--gray-2);
+  padding: var(--space-l) var(--space-l) var(--space-l) calc(var(--space-xl) + var(--space-xs));
   hanging-punctuation: first;
   margin-bottom: 0;
+  overflow: clip;
+}
+
+.prose blockquote::before {
+  content: "“";
+  position: absolute;
+  left: var(--space-m);
+  top: calc(var(--space-s) * -0.1);
+  font-family: Georgia, serif;
+  font-size: clamp(2.75rem, 2.3rem + 1.6vw, 4rem);
+  line-height: 1;
+  color: var(--jade-9);
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.prose blockquote > *:first-child {
+  margin-top: 0;
+}
+
+.prose blockquote > *:last-child {
+  margin-bottom: 0;
+}
+
+.prose blockquote p + p {
+  margin-top: var(--space-m);
 }
 
 .prose blockquote cite {
   display: block;
+  margin-top: var(--space-m);
   font-style: normal;
+  font-family: var(--font-caption);
+  font-size: var(--step--1);
+  letter-spacing: var(--letter-spacing-loose);
+  text-transform: uppercase;
+  color: var(--gray-11);
 }
 
 .prose blockquote cite::before {
-  content: "—";
-  color: var(--gray-11);
+  content: "Source";
+  color: var(--jade-11);
   margin-inline-end: var(--space-xs);
 }
 
