@@ -13,7 +13,7 @@ Based on my consulting practice **Data Vault** is quite a popular model. Some bi
 
 What's important to mention is that it is **optimized for storage**, reducing redundancy through normalization. This comes at a cost: retrieval of data is not that simple. Especially if you need to create a report using multiple business entities, your query can easily grow to a huge list of joins.
 
-# Personal Opinion
+## Personal Opinion
 
 This is where I see a possible problem from a **GenAI** perspective. Let's imagine a simple use case. You are an analyst and want to query data to get insights, and you want to ask GenAI to compose a query and build some visualization. 
 
@@ -31,7 +31,7 @@ At the same time this path of thinking leads to a conclusion that Data Vault is 
 
 >*Note: of course, you should first evaluate whether Data Vault is needed in your case. It can be quite an overkill, and the tech stack matters a lot here, since Data Vault is not always optimal from the perspective of speed and cost.*
 
-# Evidence from the Internet
+## Evidence from the Internet
 
 I tried to find stories where companies say: "*we have a Data Vault and we let GenAI query it as-is.*" There are not many and I think this absence is also evidence.
 
@@ -50,7 +50,7 @@ The same pattern appears in the research paper [Enabling Intelligent Data Modeli
 
 The most relevant evidence for the original question comes from VaultSpeed's experiment on [structured data in GenAI](https://www.vaultspeed.com/blog/unlocking-the-power-of-structured-data-in-genai). They built a **RAG** demo with a **Data Vault** integration layer underneath and compared three ways of exposing the data: source lake, star schema, and flat table. The result is exactly what I would expect: the **flat table** performed best, the **star schema** was in the middle, and the raw source-oriented structure performed worst. In their scoring, the source-oriented structure averaged around 1.8, the star schema around 2.5, and the flat table around 3.5. So even in a demonstration created by a Data Vault automation vendor, the evidence points toward the same conclusion: Data Vault is useful to integrate and govern the data, but GenAI gets better answers when you give it a simpler layer on top.
 
-# Conclusion 
+## Conclusion 
 
 So if I summarize, I do not see a lot of proof that **Data Vault** is the ideal direct interface for **GenAI**. I see quite a lot of proof that it is useful as a stable and auditable foundation, especially in enterprises with many source systems, regulatory needs, or M&A activity. I also see some evidence that AI can help teams create and maintain Data Vault faster.
 
