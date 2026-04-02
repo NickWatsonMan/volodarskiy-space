@@ -1,0 +1,57 @@
+---
+title: Data Vault for GenAI
+description: An opinionated look at whether Data Vault is a good fit for GenAI use cases, and why it may work better as a integration layer than as a direct interface for AI.
+datePublished: 2026-04-01 18:01:01+02:00
+dateModified: 2026-04-02 18:34:01+02:00
+---
+
+On one of the job interviews I was asked an interesting question:
+
+> *Do you think Data Vault is a good data model for AI use cases?*
+
+Based on my consulting practice **Data Vault** is quite a popular model. Some big banks and insurance companies I worked with designed and implemented Data Vault to use it as **integration layer** another name for silver layer. It does make sense, despite the complexity of the model, it provides flexibility to deliver changes with minimal disruption, which is a great benefit, especially with Agile methodologies in mind.
+
+What's important to mention is that it is **optimized for storage**, reducing redundancy through normalization. This comes at a cost: retrieval of data is not that simple. Especially if you need to create a report using multiple business entities, your query can easily grow to a huge list of joins.
+
+# Personal Opinion
+
+This is where I see a possible problem from a **GenAI** perspective. Let's imagine a simple use case. You are an analyst and want to query data to get insights, and you want to ask GenAI to compose a query and build some visualization. 
+
+Hopefully, you have a **data catalog**, so that GenAI will be able to understand what your tables and fields mean. Then it needs to write a query with the correct join conditions. Not to mention that usually it's not enough to use a **PK=FK** condition. There are flags, sometimes flag systems, where multiple conditions should be met if you are interested in active records.
+
+When there are about twenty joins, there are twenty places where AI can make a mistake in those conditions.
+
+Before we try to find real-life cases on the Internet, I will elaborate on my point of view. I think that the best data model for AI is the one that requires the least number of operations like joins. For example, **wide tables**: yes, they create redundancies as they are denormalized. But at the same time, AI just needs to detect the fields you are interested in and apply transformations. With wide tables, this can mean un-nesting nested fields or applying group by and running aggregations.
+
+I've seen so many mistakes in joins that have led to good-looking but absolutely misleading data that, if we can skip joins for AI, I think we better do it. This means we can kind of put an equal sign, in this sense, between a **BI tool** (e.g. Tableau) and GenAI, meaning that those tools are great within data layer specifically prepared for reports.
+
+In **Medallion Architecture** terms, GenAI should look at the *Gold* layer, not *Silver* and not *Bronze*.
+
+At the same time this path of thinking leads to a conclusion that Data Vault is not bad for GenAI use-cases, but it should not be fed into AI directly. Use **Data Vault** as *Silver* layer where you have a normalized data model as single source of truth about your business entities and related facts. After that build a *Gold* layer: **Data Marts** for reporting (that's classics) and build a **wide table** with all popular entities already joined together, so that you can query AI and ask to compose an interesting query, build a dashboard or perform analysis and answer you questions with insights.
+
+>*Note: of course, you should first evaluate whether Data Vault is needed in your case. It can be quite an overkill, and the tech stack matters a lot here, since Data Vault is not always optimal from the perspective of speed and cost.*
+
+# Evidence from the Internet
+
+I tried to find stories where companies say: "*we have a Data Vault and we let GenAI query it as-is.*" There are not many and I think this absence is also evidence.
+
+Most stories go in one of three directions:
+
+1. companies use **Data Vault** as a governed integration layer, but expose a simpler reporting or consumption layer on top of it. 
+	- *I won't comment on this direction, as it is more related to another question "Is Data Vault a good solution for your integration layer", regardless of GenAI use cases.*
+2. vendors use **AI** to automate the design and implementation of Data Vault itself;
+3. experiments show that **GenAI** performs better on flatter and more curated data structures than on highly normalized integration layers.
+
+Now to the AI-specific evidence.
+
+On the engineering side, Microsoft published a technical article with Scalefree on [defining the Raw Data Vault with Artificial Intelligence](https://techcommunity.microsoft.com/blog/analyticsonazure/defining-the-raw-data-vault-with-artificial-intelligence/4453557). Their point is not that AI should query the vault directly, but that AI can automate one of the most labor-intensive parts: defining the **Raw Data Vault** model. 
+
+The same pattern appears in the research paper [Enabling Intelligent Data Modeling with AI for Business Intelligence and Data Warehousing: A Data Vault Case Study](https://www.mdpi.com/2079-8954/13/9/811). In their experiments, **GPT-4o** performed best, while smaller or less stable models made more modeling mistakes. So here AI looks useful not as the consumer of a complex Data Vault model, but as an assistant for building it faster.
+
+The most relevant evidence for the original question comes from VaultSpeed's experiment on [structured data in GenAI](https://www.vaultspeed.com/blog/unlocking-the-power-of-structured-data-in-genai). They built a **RAG** demo with a **Data Vault** integration layer underneath and compared three ways of exposing the data: source lake, star schema, and flat table. The result is exactly what I would expect: the **flat table** performed best, the **star schema** was in the middle, and the raw source-oriented structure performed worst. In their scoring, the source-oriented structure averaged around 1.8, the star schema around 2.5, and the flat table around 3.5. So even in a demonstration created by a Data Vault automation vendor, the evidence points toward the same conclusion: Data Vault is useful to integrate and govern the data, but GenAI gets better answers when you give it a simpler layer on top.
+
+# Conclusion 
+
+So if I summarize, I do not see a lot of proof that **Data Vault** is the ideal direct interface for **GenAI**. I see quite a lot of proof that it is useful as a stable and auditable foundation, especially in enterprises with many source systems, regulatory needs, or M&A activity. I also see some evidence that AI can help teams create and maintain Data Vault faster.
+
+But when the question becomes "*what should GenAI query?*", the available stories and experiments point to *Gold*-layer objects: **wide tables**, semantic layers, and curated marts.
